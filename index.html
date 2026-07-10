@@ -1,3 +1,516 @@
-<ul>
-    <li><a href="modules/Working_with_AI_Level1.html">Level 1: Foundation — AI와 함께 일하기</a></li>
-</ul>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VialiS Lab · AI 협업 커리큘럼</title>
+<meta name="description" content="AI와 함께 일하기 — VialiS Lab 교육 자료 인덱스">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FAF7F0;
+    --paper-raised:#FFFFFF;
+    --ink:#1E2420;
+    --line:#DCD6C8;
+    --line-strong:#C7BFAE;
+    --jade:#2B6A5C;
+    --jade-dim:#3f8272;
+    --gold:#B9862E;
+    --muted:#74716A;
+    --radius:4px;
+    --serif: 'Noto Serif KR', serif;
+    --sans: 'Noto Sans KR', -apple-system, 'Malgun Gothic', sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--jade);color:#fff;}
+
+  /* ---------- header ---------- */
+  header.site{
+    max-width:920px;
+    margin:0 auto;
+    padding:72px 24px 40px;
+    border-bottom:1px solid var(--line);
+  }
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin:0 0 14px;
+  }
+  h1.title{
+    font-family:var(--serif);
+    font-weight:700;
+    font-size:clamp(28px,4.2vw,42px);
+    line-height:1.2;
+    margin:0 0 12px;
+    letter-spacing:-.01em;
+  }
+  p.lede{
+    font-size:16px;
+    color:var(--muted);
+    max-width:56ch;
+    margin:0 0 28px;
+  }
+  .meta-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    align-items:center;
+    font-family:var(--mono);
+    font-size:12.5px;
+    color:var(--muted);
+  }
+  .meta-pill{
+    border:1px solid var(--line-strong);
+    border-radius:999px;
+    padding:5px 12px;
+    background:var(--paper-raised);
+  }
+  .meta-pill strong{color:var(--ink);font-weight:600;}
+
+  /* ---------- search ---------- */
+  .toolbar{
+    max-width:920px;
+    margin:0 auto;
+    padding:22px 24px 0;
+    display:flex;
+    gap:12px;
+    align-items:center;
+  }
+  #searchInput{
+    flex:1;
+    font-family:var(--sans);
+    font-size:14.5px;
+    padding:11px 14px;
+    border:1px solid var(--line-strong);
+    border-radius:var(--radius);
+    background:var(--paper-raised);
+    color:var(--ink);
+    outline:none;
+  }
+  #searchInput:focus-visible{
+    border-color:var(--jade);
+    box-shadow:0 0 0 3px rgba(43,106,92,.15);
+  }
+  #searchInput::placeholder{color:#a6a296;}
+
+  /* ---------- main / spine layout ---------- */
+  main{
+    max-width:920px;
+    margin:0 auto;
+    padding:36px 24px 100px;
+  }
+  .spine{
+    position:relative;
+    padding-left:64px;
+  }
+  .spine::before{
+    content:"";
+    position:absolute;
+    left:27px;
+    top:6px;
+    bottom:6px;
+    width:1px;
+    background:linear-gradient(var(--line-strong), var(--line-strong) 92%, transparent);
+  }
+  .entry{
+    position:relative;
+    margin-bottom:22px;
+    opacity:0;
+    transform:translateY(10px);
+    animation:rise .5s ease forwards;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .entry{animation:none;opacity:1;transform:none;}
+  }
+  @keyframes rise{
+    to{opacity:1;transform:translateY(0);}
+  }
+  .tab{
+    position:absolute;
+    left:-64px;
+    top:22px;
+    width:56px;
+    height:26px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:var(--mono);
+    font-size:12px;
+    font-weight:600;
+    color:var(--paper-raised);
+    background:var(--jade);
+    border-radius:3px 0 0 3px;
+    letter-spacing:.02em;
+  }
+  .tab.unnumbered{background:var(--muted);}
+  .tab::after{
+    content:"";
+    position:absolute;
+    right:-8px;
+    top:0;
+    width:0;height:0;
+    border-top:13px solid transparent;
+    border-bottom:13px solid transparent;
+    border-left:8px solid var(--jade);
+  }
+  .tab.unnumbered::after{border-left-color:var(--muted);}
+
+  a.card{
+    display:block;
+    text-decoration:none;
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-left:3px solid var(--jade);
+    border-radius:var(--radius);
+    padding:20px 24px;
+    transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  }
+  a.card:hover{
+    transform:translateX(2px);
+    box-shadow:0 6px 20px -8px rgba(30,36,32,.18);
+    border-left-color:var(--gold);
+  }
+  a.card:focus-visible{
+    outline:2px solid var(--jade);
+    outline-offset:2px;
+  }
+  .card-kicker{
+    font-family:var(--mono);
+    font-size:11.5px;
+    letter-spacing:.06em;
+    color:var(--gold);
+    text-transform:uppercase;
+    margin-bottom:6px;
+  }
+  .card-title{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:20px;
+    margin:0 0 6px;
+    color:var(--ink);
+  }
+  .card-desc{
+    font-size:14.5px;
+    color:var(--muted);
+    margin:0 0 12px;
+    max-width:66ch;
+  }
+  .card-foot{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    font-family:var(--mono);
+    font-size:12px;
+    color:#9b9789;
+  }
+  .card-foot .go{
+    color:var(--jade);
+    font-weight:600;
+  }
+  a.card:hover .card-foot .go{color:var(--gold);}
+
+  /* ---------- states ---------- */
+  .state-box{
+    padding:40px 28px;
+    border:1px dashed var(--line-strong);
+    border-radius:var(--radius);
+    background:var(--paper-raised);
+    text-align:center;
+    color:var(--muted);
+    font-size:14.5px;
+  }
+  .state-box strong{display:block;color:var(--ink);font-family:var(--serif);font-size:17px;margin-bottom:8px;font-weight:600;}
+  .state-box a.retry{
+    display:inline-block;
+    margin-top:14px;
+    font-family:var(--mono);
+    font-size:12.5px;
+    color:var(--jade);
+    border:1px solid var(--line-strong);
+    padding:7px 14px;
+    border-radius:999px;
+    text-decoration:none;
+  }
+  .state-box a.retry:hover{border-color:var(--jade);}
+  .skeleton{
+    height:78px;
+    border-radius:var(--radius);
+    background:linear-gradient(90deg, #f1efe8 0%, #f8f6f0 50%, #f1efe8 100%);
+    background-size:200% 100%;
+    animation:shimmer 1.4s ease-in-out infinite;
+    margin-bottom:22px;
+  }
+  @media (prefers-reduced-motion: reduce){ .skeleton{animation:none;} }
+  @keyframes shimmer{
+    0%{background-position:200% 0;}
+    100%{background-position:-200% 0;}
+  }
+
+  footer.site{
+    max-width:920px;
+    margin:0 auto;
+    padding:0 24px 60px;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--muted);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  footer.site a{color:var(--jade);text-decoration:none;}
+  footer.site a:hover{text-decoration:underline;}
+
+  @media (max-width:600px){
+    .spine{padding-left:46px;}
+    .spine::before{left:19px;}
+    .tab{left:-46px;width:40px;font-size:10.5px;}
+    a.card{padding:16px 16px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <p class="eyebrow">VialiS Lab · Education</p>
+  <h1 class="title">AI와 함께 일하기</h1>
+  <p class="lede">업무를 시스템으로 설계하고 AI와 지속적으로 협업하는 방법을 단계별로 익히는 교육 시리즈입니다. 새 자료는 모듈 폴더에 올리는 즉시 이 목록에 자동으로 나타납니다.</p>
+  <div class="meta-row">
+    <span class="meta-pill"><strong id="countPill">–</strong> 개 모듈</span>
+    <span class="meta-pill">저장소 <strong>VialiS-Lab.github.io</strong></span>
+    <span class="meta-pill" id="updatedPill">최신 확인 중…</span>
+  </div>
+</header>
+
+<div class="toolbar">
+  <input id="searchInput" type="text" placeholder="모듈 제목으로 검색…" autocomplete="off">
+</div>
+
+<main>
+  <div class="spine" id="listRoot">
+    <div class="skeleton"></div>
+    <div class="skeleton"></div>
+    <div class="skeleton"></div>
+  </div>
+</main>
+
+<footer class="site">
+  <span>© <span id="year"></span> VialiS Lab</span>
+  <a href="https://github.com/VialiS-Lab/VialiS-Lab.github.io/tree/main/modules" target="_blank" rel="noopener">GitHub에서 modules 폴더 보기 ↗</a>
+</footer>
+
+<script>
+(function(){
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const OWNER = 'VialiS-Lab';
+  const REPO  = 'VialiS-Lab.github.io';
+  const DIR   = 'modules';
+  const API_LIST = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${DIR}`;
+  const CACHE_KEY = 'vialis_modules_cache_v1';
+  const CACHE_TTL_MS = 5 * 60 * 1000; // 5분 세션 캐시
+
+  const listRoot   = document.getElementById('listRoot');
+  const countPill  = document.getElementById('countPill');
+  const updatedPill= document.getElementById('updatedPill');
+  const searchInput= document.getElementById('searchInput');
+
+  let allEntries = [];
+
+  function escapeHtml(str){
+    return (str || '').replace(/[&<>"']/g, s => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[s]));
+  }
+
+  function extractLevel(text){
+    if(!text) return null;
+    const m = text.match(/level\s*(\d+)/i);
+    return m ? parseInt(m[1], 10) : null;
+  }
+
+  function stripLevelPrefix(subtitle){
+    if(!subtitle) return '';
+    return subtitle.replace(/^\s*level\s*\d+\s*[·:\-–]\s*/i, '').trim();
+  }
+
+  async function fetchModuleMeta(item){
+    // item: { name, download_url, html_url, path }
+    const meta = {
+      file: item.name,
+      path: item.path,
+      url: `./${DIR}/${item.name}`,
+      title: item.name.replace(/\.html?$/i, '').replace(/[_\-]+/g, ' '),
+      subtitle: '',
+      desc: '',
+      level: extractLevel(item.name)
+    };
+    try{
+      const res = await fetch(item.download_url);
+      if(!res.ok) throw new Error('raw fetch failed');
+      const html = await res.text();
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+
+      const titleEl = doc.querySelector('title');
+      if(titleEl && titleEl.textContent.trim()) meta.title = titleEl.textContent.trim();
+
+      const descMeta = doc.querySelector('meta[name="description"]');
+      const h2 = doc.querySelector('h2');
+      const firstP = doc.querySelector('p');
+
+      if(h2 && h2.textContent.trim()){
+        meta.subtitle = h2.textContent.trim();
+        if(meta.level === null) meta.level = extractLevel(meta.subtitle);
+      }
+      if(descMeta && descMeta.getAttribute('content')){
+        meta.desc = descMeta.getAttribute('content').trim();
+      } else if(firstP && firstP.textContent.trim()){
+        meta.desc = firstP.textContent.trim().slice(0, 110);
+      }
+    }catch(e){
+      // 원문 파싱 실패해도 파일명만으로 카드는 계속 노출
+    }
+    return meta;
+  }
+
+  function render(entries, query){
+    const q = (query || '').trim().toLowerCase();
+    const filtered = q
+      ? entries.filter(e => (e.title + ' ' + e.subtitle + ' ' + e.desc).toLowerCase().includes(q))
+      : entries;
+
+    if(filtered.length === 0){
+      listRoot.innerHTML = `
+        <div class="state-box">
+          <strong>${q ? '검색 결과가 없습니다' : '아직 등록된 모듈이 없습니다'}</strong>
+          ${q ? '다른 검색어로 시도해보세요.' : 'modules 폴더에 .html 파일을 올리면 자동으로 이 목록에 나타납니다.'}
+        </div>`;
+      return;
+    }
+
+    listRoot.innerHTML = filtered.map((e, i) => {
+      const tabLabel = e.level !== null ? `Lv.${String(e.level).padStart(2,'0')}` : '·';
+      const tabClass = e.level !== null ? '' : 'unnumbered';
+      const subtitle = stripLevelPrefix(e.subtitle) || e.subtitle;
+      return `
+        <div class="entry" style="animation-delay:${Math.min(i,8) * 45}ms">
+          <span class="tab ${tabClass}">${tabLabel}</span>
+          <a class="card" href="${e.url}">
+            <p class="card-kicker">${e.level !== null ? `Level ${e.level}` : '모듈'}</p>
+            <h2 class="card-title">${escapeHtml(e.title)}</h2>
+            ${subtitle ? `<p class="card-desc"><em>${escapeHtml(subtitle)}</em></p>` : ''}
+            ${e.desc ? `<p class="card-desc">${escapeHtml(e.desc)}${e.desc.length >= 110 ? '…' : ''}</p>` : ''}
+            <div class="card-foot">
+              <span>${escapeHtml(e.file)}</span>
+              <span class="go">열어보기 →</span>
+            </div>
+          </a>
+        </div>`;
+    }).join('');
+  }
+
+  function renderError(message){
+    listRoot.innerHTML = `
+      <div class="state-box">
+        <strong>목록을 불러오지 못했습니다</strong>
+        ${escapeHtml(message)}<br>
+        GitHub API 요청 한도이거나 네트워크 문제일 수 있습니다.
+        <div>
+          <a class="retry" href="javascript:location.reload()">다시 시도</a>
+          <a class="retry" href="https://github.com/${OWNER}/${REPO}/tree/main/${DIR}" target="_blank" rel="noopener">GitHub에서 직접 보기 ↗</a>
+        </div>
+      </div>`;
+  }
+
+  function readCache(){
+    try{
+      const raw = sessionStorage.getItem(CACHE_KEY);
+      if(!raw) return null;
+      const parsed = JSON.parse(raw);
+      if(Date.now() - parsed.ts > CACHE_TTL_MS) return null;
+      return parsed.entries;
+    }catch(e){ return null; }
+  }
+  function writeCache(entries){
+    try{
+      sessionStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), entries }));
+    }catch(e){ /* storage 사용 불가 시 무시 */ }
+  }
+
+  async function load(){
+    const cached = readCache();
+    if(cached){
+      allEntries = cached;
+      countPill.textContent = allEntries.length;
+      updatedPill.textContent = '세션 캐시에서 표시 중';
+      render(allEntries);
+      return;
+    }
+
+    try{
+      const listRes = await fetch(API_LIST, { headers: { 'Accept': 'application/vnd.github+json' } });
+      if(!listRes.ok){
+        if(listRes.status === 404){
+          allEntries = [];
+          countPill.textContent = '0';
+          updatedPill.textContent = 'modules 폴더 없음';
+          render(allEntries);
+          return;
+        }
+        throw new Error(`GitHub API 응답 오류 (${listRes.status})`);
+      }
+      const items = await listRes.json();
+      const htmlFiles = (Array.isArray(items) ? items : [])
+        .filter(it => it.type === 'file' && /\.html?$/i.test(it.name));
+
+      if(htmlFiles.length === 0){
+        allEntries = [];
+        countPill.textContent = '0';
+        updatedPill.textContent = '자료 없음';
+        render(allEntries);
+        return;
+      }
+
+      const metas = await Promise.all(htmlFiles.map(fetchModuleMeta));
+      metas.sort((a, b) => {
+        if(a.level === null && b.level === null) return a.title.localeCompare(b.title, 'ko');
+        if(a.level === null) return 1;
+        if(b.level === null) return -1;
+        return a.level - b.level;
+      });
+
+      allEntries = metas;
+      countPill.textContent = String(allEntries.length);
+      updatedPill.textContent = new Date().toLocaleDateString('ko-KR', { year:'numeric', month:'long', day:'numeric' }) + ' 기준';
+      writeCache(allEntries);
+      render(allEntries);
+    }catch(err){
+      renderError(err.message || '알 수 없는 오류가 발생했습니다.');
+      countPill.textContent = '–';
+      updatedPill.textContent = '불러오기 실패';
+    }
+  }
+
+  searchInput.addEventListener('input', () => render(allEntries, searchInput.value));
+
+  load();
+})();
+</script>
+
+</body>
+</html>
